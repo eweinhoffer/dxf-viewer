@@ -1,4 +1,4 @@
-import {DxfArcEntity, DxfCircleEntity, DxfDocument, DxfEntity, DxfLineEntity, DxfPoint, DxfPolylineEntity} from "./types";
+import {DxfArcEntity, DxfCircleEntity, DxfDocument, DxfDrawingUnit, DxfEntity, DxfLineEntity, DxfPoint, DxfPolylineEntity} from "./types";
 
 interface DxfGroup {
 	code: number;
@@ -17,6 +17,7 @@ export function parseDxf(raw: string): DxfDocument {
 	}
 
 	const groups = parseGroups(raw);
+	const drawingUnit = parseDrawingUnit(groups);
 	const entities: DxfEntity[] = [];
 	let inEntitiesSection = false;
 
@@ -60,7 +61,7 @@ export function parseDxf(raw: string): DxfDocument {
 		i = parsed.nextIndex;
 	}
 
-	return {entities, warnings};
+	return {entities, warnings, drawingUnit};
 }
 
 function parseGroups(raw: string): DxfGroup[] {
@@ -115,6 +116,64 @@ function parseSimpleEntity(groups: DxfGroup[], startIndex: number): EntityParseR
 		default:
 			return {entity: null, nextIndex: i};
 	}
+}
+
+function parseDrawingUnit(groups: DxfGroup[]): DxfDrawingUnit | null {
+	let inHeaderSection = false;
+
+	for (let i = 0; i < groups.length; i += 1) {
+		const group = groups[i];
+		if (!group) {
+			break;
+		}
+
+		if (group.code === 0 && group.value === "SECTION") {
+			inHeaderSection = groups[i + 1]?.code === 2 && groups[i + 1]?.value === "HEADER";
+			continue;
+		}
+
+		if (group.code === 0 && group.value === "ENDSEC") {
+			inHeaderSection = false;
+			continue;
+		}
+
+		if (!inHeaderSection || group.code !== 9 || group.value !== "$INSUNITS") {
+			continue;
+		}
+
+		for (let j = i + 1; j < groups.length; j += 1) {
+			const valueGroup = groups[j];
+			if (!valueGroup || valueGroup.code === 0 || valueGroup.code === 9) {
+				break;
+			}
+
+			const code = Math.trunc(parseNumber(valueGroup.value) ?? Number.NaN);
+			if (!Number.isFinite(code)) {
+				continue;
+			}
+
+			switch (code) {
+				case 0:
+					return "unitless";
+				case 1:
+					return "inch";
+				case 2:
+					return "foot";
+				case 3:
+					return "mile";
+				case 4:
+					return "mm";
+				case 5:
+					return "cm";
+				case 6:
+					return "m";
+				default:
+					return null;
+			}
+		}
+	}
+
+	return null;
 }
 
 function parseLine(body: DxfGroup[]): DxfLineEntity | null {

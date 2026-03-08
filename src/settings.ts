@@ -4,17 +4,19 @@ import DxfViewerPlugin from "./main";
 export interface DxfViewerSettings {
 	lineColor: string;
 	backgroundColor: string;
+	measurementColor: string;
 	padding: number;
 	showGridlines: boolean;
-	gridSizeMm: number;
+	measurementUnits: "same-as-drawing" | "display-both";
 }
 
 export const DEFAULT_SETTINGS: DxfViewerSettings = {
 	lineColor: "#4c9aff",
 	backgroundColor: "#10131a",
+	measurementColor: "#ffd166",
 	padding: 24,
 	showGridlines: true,
-	gridSizeMm: 1,
+	measurementUnits: "display-both",
 };
 
 export class DxfViewerSettingTab extends PluginSettingTab {
@@ -32,9 +34,8 @@ export class DxfViewerSettingTab extends PluginSettingTab {
 		new Setting(containerEl)
 			.setName("Line color")
 			.setDesc("Stroke color used when drawing dxf entities.")
-			.addText((text) => text
-				.setPlaceholder("#4c9aff")
-				.setValue(this.plugin.settings.lineColor)
+			.addColorPicker((color) => color
+				.setValue(sanitizeColor(this.plugin.settings.lineColor, DEFAULT_SETTINGS.lineColor))
 				.onChange(async (value: string) => {
 					this.plugin.settings.lineColor = sanitizeColor(value, DEFAULT_SETTINGS.lineColor);
 					await this.plugin.saveSettings();
@@ -43,11 +44,20 @@ export class DxfViewerSettingTab extends PluginSettingTab {
 		new Setting(containerEl)
 			.setName("Background color")
 			.setDesc("Canvas background color for the dxf viewer.")
-			.addText((text) => text
-				.setPlaceholder("#10131a")
-				.setValue(this.plugin.settings.backgroundColor)
+			.addColorPicker((color) => color
+				.setValue(sanitizeColor(this.plugin.settings.backgroundColor, DEFAULT_SETTINGS.backgroundColor))
 				.onChange(async (value: string) => {
 					this.plugin.settings.backgroundColor = sanitizeColor(value, DEFAULT_SETTINGS.backgroundColor);
+					await this.plugin.saveSettings();
+				}));
+
+		new Setting(containerEl)
+			.setName("Measurement color")
+			.setDesc("Color used for measurement handles, highlights, and dimension labels.")
+			.addColorPicker((color) => color
+				.setValue(sanitizeColor(this.plugin.settings.measurementColor, DEFAULT_SETTINGS.measurementColor))
+				.onChange(async (value: string) => {
+					this.plugin.settings.measurementColor = sanitizeColor(value, DEFAULT_SETTINGS.measurementColor);
 					await this.plugin.saveSettings();
 				}));
 
@@ -74,13 +84,14 @@ export class DxfViewerSettingTab extends PluginSettingTab {
 				}));
 
 		new Setting(containerEl)
-			.setName("Grid size (mm)")
-			.setDesc("Grid spacing in millimeters. Uses dxf units as mm.")
-			.addText((text) => text
-				.setPlaceholder("1")
-				.setValue(String(this.plugin.settings.gridSizeMm))
-				.onChange(async (value: string) => {
-					this.plugin.settings.gridSizeMm = parsePositiveNumber(value, DEFAULT_SETTINGS.gridSizeMm);
+			.setName("Measurement units")
+			.setDesc("Choose whether measurements follow the drawing units or show both drawing units and the alternate system.")
+			.addDropdown((dropdown) => dropdown
+				.addOption("same-as-drawing", "Same as drawing units")
+				.addOption("display-both", "Display both")
+				.setValue(this.plugin.settings.measurementUnits)
+				.onChange(async (value: "same-as-drawing" | "display-both") => {
+					this.plugin.settings.measurementUnits = value;
 					await this.plugin.saveSettings();
 				}));
 	}
@@ -96,12 +107,4 @@ function sanitizeColor(value: string, fallback: string): string {
 
 function clamp(value: number, min: number, max: number): number {
 	return Math.min(max, Math.max(min, value));
-}
-
-function parsePositiveNumber(value: string, fallback: number): number {
-	const parsed = Number.parseFloat(value);
-	if (!Number.isFinite(parsed) || parsed <= 0) {
-		return fallback;
-	}
-	return clamp(parsed, 0.0001, 1_000_000);
 }

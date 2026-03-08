@@ -29,11 +29,16 @@ export interface DxfPolylineEntity {
 	closed: boolean;
 }
 
+export type DxfCurveEntity = DxfCircleEntity | DxfArcEntity;
+
 export type DxfEntity = DxfLineEntity | DxfCircleEntity | DxfArcEntity | DxfPolylineEntity;
+
+export type DxfDrawingUnit = "inch" | "foot" | "mile" | "mm" | "cm" | "m" | "unitless";
 
 export interface DxfDocument {
 	entities: DxfEntity[];
 	warnings: string[];
+	drawingUnit: DxfDrawingUnit | null;
 }
 
 export interface DxfBounds {

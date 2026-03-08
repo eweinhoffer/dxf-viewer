@@ -1,60 +1,267 @@
 .dxf-viewer {
-	display: grid;
-	grid-template-rows: 1fr auto;
+	display: block;
 	height: 100%;
 	min-height: 240px;
-	gap: 8px;
 	padding: 12px;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+.dxf-viewer--embed {
+	height: auto;
+	min-height: 0;
+}
+
+.dxf-viewer__canvas-frame {
+	position: relative;
+	height: 100%;
+	min-width: 0;
+	min-height: 320px;
+}
+
+.dxf-viewer--embed .dxf-viewer__canvas-frame {
+	height: 420px;
 }
 
 .dxf-viewer__canvas {
+	display: block;
 	width: 100%;
 	height: 100%;
 	min-height: 320px;
+	min-width: 0;
 	border: 1px solid var(--background-modifier-border);
 	border-radius: 8px;
 	background: var(--background-primary);
 }
 
-.dxf-viewer__toolbar {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	padding: 8px 10px;
-	border: 1px solid var(--background-modifier-border);
-	border-radius: 8px;
-	background: var(--background-secondary);
-}
-
-.dxf-viewer__measure-button {
+.dxf-viewer__measure-button,
+.dxf-viewer__overlay-button,
+.dxf-viewer__unit-button {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 30px;
-	height: 30px;
+	width: 34px;
+	height: 34px;
 	padding: 0;
 	border: 1px solid var(--background-modifier-border);
-	border-radius: 6px;
-	background: var(--background-primary);
+	border-radius: 9px;
+	background: rgba(24, 28, 36, 0.92);
 	color: var(--text-muted);
 	cursor: pointer;
+	box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+	backdrop-filter: blur(8px);
 }
 
-.dxf-viewer__measure-button.is-active {
+.dxf-viewer__measure-button.is-active,
+.dxf-viewer__overlay-button.is-active,
+.dxf-viewer__unit-button.is-active {
 	color: var(--interactive-accent);
 	border-color: var(--interactive-accent);
 }
 
-.dxf-viewer__units {
-	display: inline-flex;
-	align-items: center;
-	gap: 6px;
-	font-size: var(--font-ui-small);
-	color: var(--text-muted);
+.dxf-viewer__measure-button--overlay {
+	position: absolute;
+	bottom: 12px;
+	left: 138px;
+	z-index: 2;
 }
 
-.dxf-viewer__info {
-	font-size: var(--font-ui-small);
+.dxf-viewer__help-button {
+	position: absolute;
+	left: 12px;
+	bottom: 12px;
+	z-index: 2;
+	font-size: 18px;
+	font-weight: 600;
+	line-height: 1;
+}
+
+.dxf-viewer__help-popover {
+	position: absolute;
+	left: 12px;
+	bottom: 52px;
+	z-index: 2;
+	display: none;
+	max-width: min(420px, calc(100% - 120px));
+	padding: 10px 12px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 12px;
+	background: rgba(24, 28, 36, 0.94);
 	color: var(--text-muted);
-	margin-left: auto;
+	font-size: var(--font-ui-small);
+	line-height: 1.4;
+	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+	backdrop-filter: blur(10px);
+	white-space: normal;
+	overflow-wrap: anywhere;
+}
+
+.dxf-viewer__help-popover.is-visible {
+	display: block;
+}
+
+.dxf-viewer__component-button {
+	position: absolute;
+	left: 138px;
+	bottom: 52px;
+	z-index: 2;
+	display: none;
+}
+
+.dxf-viewer__component-button.is-visible {
+	display: inline-flex;
+}
+
+.dxf-viewer__component-icon {
+	position: relative;
+	width: 18px;
+	height: 18px;
+}
+
+.dxf-viewer__component-axis {
+	position: absolute;
+	background: currentColor;
+	border-radius: 999px;
+	opacity: 0.95;
+}
+
+.dxf-viewer__component-axis--x {
+	left: 3px;
+	right: 2px;
+	bottom: 4px;
+	height: 1px;
+}
+
+.dxf-viewer__component-axis--y {
+	left: 3px;
+	top: 1px;
+	bottom: 4px;
+	width: 1px;
+}
+
+.dxf-viewer__component-axis-label {
+	position: absolute;
+	font-size: 9px;
+	font-weight: 700;
+	line-height: 1;
+	text-transform: lowercase;
+}
+
+.dxf-viewer__component-axis-label--x {
+	right: -1px;
+	bottom: 0;
+}
+
+.dxf-viewer__component-axis-label--y {
+	left: 0;
+	top: -1px;
+}
+
+.dxf-viewer__unit-button {
+	position: absolute;
+	left: 54px;
+	bottom: 12px;
+	z-index: 2;
+}
+
+.dxf-viewer__unit-button-icon {
+	display: grid;
+	grid-template-rows: repeat(2, min-content);
+	gap: 1px;
+	align-items: center;
+	justify-items: center;
+	line-height: 1;
+}
+
+.dxf-viewer__unit-button-glyph {
+	font-size: 9px;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	text-transform: lowercase;
+}
+
+.dxf-viewer__unit-popover {
+	position: absolute;
+	left: 54px;
+	bottom: 52px;
+	z-index: 2;
+	display: none;
+	padding: 8px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 10px;
+	background: rgba(24, 28, 36, 0.94);
+	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+	backdrop-filter: blur(10px);
+}
+
+.dxf-viewer__unit-popover.is-visible {
+	display: block;
+}
+
+.dxf-viewer__unit-select {
+	min-width: 128px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 6px;
+	background: var(--background-primary);
+	color: var(--text-normal);
+	padding: 4px 8px;
+	font-size: var(--font-ui-small);
+}
+
+.dxf-viewer__zoom-all-button {
+	position: absolute;
+	left: 96px;
+	bottom: 12px;
+	z-index: 2;
+}
+
+.dxf-viewer__help-list {
+	margin: 0;
+	padding-left: 18px;
+}
+
+.dxf-viewer__help-list li + li {
+	margin-top: 6px;
+}
+
+.dxf-viewer__help-sublist {
+	margin: 6px 0 0;
+	padding-left: 18px;
+}
+
+.dxf-viewer__help-sublist li + li {
+	margin-top: 4px;
+}
+
+.dxf-viewer__status {
+	position: absolute;
+	right: 14px;
+	bottom: 12px;
+	z-index: 1;
+	max-width: min(60%, 420px);
+	font-size: 12px;
+	color: var(--text-muted);
+	text-align: right;
+	white-space: normal;
+	overflow-wrap: anywhere;
+	pointer-events: none;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.45);
+}
+
+.dxf-viewer__status.is-detail {
+	max-width: min(70%, 420px);
+	font-size: 12px;
+}
+
+.dxf-viewer__embed-host {
+	display: block;
+	width: 100%;
+}
+
+.dxf-viewer__embed-error {
+	padding: 12px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 8px;
+	background: var(--background-secondary);
+	color: var(--text-muted);
 }
