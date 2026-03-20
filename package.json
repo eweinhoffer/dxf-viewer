@@ -2,8 +2,15 @@
 	"name": "dxf-viewer",
 	"version": "1.0.0",
 	"description": "View and measure .dxf drawings inside Obsidian",
-	"author": "Eric Weinhoffer (https://www.ericweinhoffer.com)",
-	"homepage": "https://www.ericweinhoffer.com",
+	"author": "eweinhoffer",
+	"homepage": "https://github.com/eweinhoffer/dxf-viewer",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/eweinhoffer/dxf-viewer.git"
+	},
+	"bugs": {
+		"url": "https://github.com/eweinhoffer/dxf-viewer/issues"
+	},
 	"main": "main.js",
 	"type": "module",
 	"scripts": {
@@ -15,17 +22,12 @@
 	"keywords": [],
 	"license": "MIT",
 	"devDependencies": {
-		"@types/node": "^16.11.6",
 		"esbuild": "0.25.5",
 		"eslint-plugin-obsidianmd": "0.1.9",
 		"globals": "14.0.0",
-		"tslib": "2.4.0",
+		"jiti": "2.6.1",
+		"obsidian": "1.10.3",
 		"typescript": "^5.8.3",
-		"typescript-eslint": "8.35.1",
-		"@eslint/js": "9.30.1",
-		"jiti": "2.6.1"
-	},
-	"dependencies": {
-		"obsidian": "latest"
+		"typescript-eslint": "8.35.1"
 	}
 }

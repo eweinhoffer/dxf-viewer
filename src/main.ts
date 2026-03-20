@@ -33,7 +33,8 @@ export default class DxfViewerPlugin extends Plugin {
 	}
 
 	onunload(): void {
-		this.app.workspace.getLeavesOfType(DXF_VIEW_TYPE).forEach((leaf) => leaf.detach());
+		// Intentionally empty — do not detach leaves here so the user's
+		// workspace layout is preserved across plugin updates and disables.
 	}
 
 	async loadSettings(): Promise<void> {
