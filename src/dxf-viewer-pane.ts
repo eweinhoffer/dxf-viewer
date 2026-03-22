@@ -702,7 +702,7 @@ export class DxfViewerPane extends Component {
 		this.renderHelpPopover();
 
 		if (!this.rawData.trim()) {
-			this.summaryEl.setText("No dxf content loaded.");
+			this.summaryEl.setText("No DXF content loaded.");
 			this.summaryEl.classList.add("is-detail");
 			this.recordCanvasSize();
 			this.canvasEl.getContext("2d")?.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
