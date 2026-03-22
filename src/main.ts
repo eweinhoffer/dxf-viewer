@@ -16,7 +16,7 @@ export default class DxfViewerPlugin extends Plugin {
 
 		this.addCommand({
 			id: "open-current-dxf-in-viewer",
-			name: "Open current dxf in viewer",
+			name: "Open current DXF in viewer",
 			checkCallback: (checking: boolean): boolean => {
 				const activeFile = this.app.workspace.getActiveFile();
 				if (!activeFile || activeFile.extension.toLowerCase() !== "dxf") {

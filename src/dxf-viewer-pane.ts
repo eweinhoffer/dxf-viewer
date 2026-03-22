@@ -858,13 +858,14 @@ export class DxfViewerPane extends Component {
 		}
 
 		const listEl = this.helpPopoverEl.createEl("ul", {cls: "dxf-viewer__help-list"});
-		listEl.createEl("li", {text: "Drag to pan."});
-		listEl.createEl("li", {text: "Pinch or cmd/ctl + scroll wheel to zoom."});
-		listEl.createEl("li", {text: "Click the maximize button to zoom all and fit the full drawing back into view."});
-		const measureItem = listEl.createEl("li", {text: "Click the ruler to enter measure mode."});
+		listEl.createEl("li", {text: "Select the in/mm button to change units."});
+		listEl.createEl("li", {text: "Drag on trackpad or select and drag with mouse to pan."});
+		listEl.createEl("li", {text: "Pinch on trackpad or Cmd/Ctrl + scroll wheel to zoom."});
+		listEl.createEl("li", {text: "Select the maximize button to zoom all and fit the full drawing back into view."});
+		const measureItem = listEl.createEl("li", {text: "Select the ruler to enter measure mode."});
 		const measureSublist = measureItem.createEl("ul", {cls: "dxf-viewer__help-sublist"});
-		measureSublist.createEl("li", {text: "Click the component measurement button above the ruler."});
-		measureSublist.createEl("li", {text: "Measure between curves or vertexes, and double-click to clear the current measurement."});
+		measureSublist.createEl("li", {text: "Select the component measurement button above the ruler."});
+		measureSublist.createEl("li", {text: "Measure between curves or vertices, and double-select to clear the current measurement."});
 	}
 
 	private stabilizeCanvasViewportIfNeeded(): void {

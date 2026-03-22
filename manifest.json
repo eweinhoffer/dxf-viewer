@@ -2,9 +2,10 @@
 	"id": "dxf-viewer",
 	"name": "DXF Viewer",
 	"version": "1.0.0",
-	"minAppVersion": "1.5.12",
-	"description": "View and measure DXF drawings inside Obsidian.",
-	"author": "eweinhoffer",
-	"authorUrl": "https://github.com/eweinhoffer",
+	"minAppVersion": "1.12.4",
+	"description": "View, measure, and embed DXF drawings directly inside Obsidian.",
+	"author": "Eric Weinhoffer",
+	"authorUrl": "https://ericweinhoffer.com",
+	"fundingUrl": "https://buymeacoffee.com/eweinhoffer",
 	"isDesktopOnly": true
 }

@@ -33,7 +33,7 @@ export class DxfViewerSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName("Line color")
-			.setDesc("Stroke color used when drawing dxf entities.")
+			.setDesc("Stroke color used when drawing DXF entities.")
 			.addColorPicker((color) => color
 				.setValue(sanitizeColor(this.plugin.settings.lineColor, DEFAULT_SETTINGS.lineColor))
 				.onChange(async (value: string) => {
@@ -43,7 +43,7 @@ export class DxfViewerSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName("Background color")
-			.setDesc("Canvas background color for the dxf viewer.")
+			.setDesc("Canvas background color for the DXF viewer.")
 			.addColorPicker((color) => color
 				.setValue(sanitizeColor(this.plugin.settings.backgroundColor, DEFAULT_SETTINGS.backgroundColor))
 				.onChange(async (value: string) => {
@@ -75,7 +75,7 @@ export class DxfViewerSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName("Show gridlines")
-			.setDesc("Display gridlines in the dxf viewer.")
+			.setDesc("Display gridlines in the DXF viewer.")
 			.addToggle((toggle) => toggle
 				.setValue(this.plugin.settings.showGridlines)
 				.onChange(async (value: boolean) => {

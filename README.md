@@ -1,10 +1,10 @@
 # DXF Viewer
 
-View and measure `.dxf` CAD drawings directly inside Obsidian.
+![DXF Viewer](dxf-viewer-title.png)
 
-Desktop-only for the initial community release.
+View, measure, and embed DXF drawings directly inside Obsidian.
 
-## What it does
+## 📚 Features
 
 - Open `.dxf` files in a dedicated Obsidian view.
 - Render DXF embeds inside notes in reading mode with `![[drawing.dxf]]`.
@@ -13,64 +13,43 @@ Desktop-only for the initial community release.
 - Show direct distance or X/Y component measurements.
 - Auto-detect drawing units from DXF metadata, with manual override when needed.
 
-## Supported entities
-
-- `LINE`
-- `LWPOLYLINE`
-- `POLYLINE` / `VERTEX`
-- `CIRCLE`
-- `ARC`
-
-## Privacy and security
-
-- No account required.
-- No telemetry.
-- No network access is needed for normal use.
-- Reads DXF files already stored in your vault.
-
-## Installation
+## 🛠️ Installation
 
 ### Community plugins
 
-1. Open **Settings -> Community plugins**.
-2. Select **Browse**, search for `DXF Viewer`, and install it.
+1. Open **Settings → Community plugins**.
+2. Select **Browse**, search for **DXF Viewer**, and install it.
 3. Enable **DXF Viewer**.
 
 ### Manual installation
 
 1. Download `manifest.json`, `main.js`, and `styles.css` from the latest GitHub release.
 2. Create `<your vault>/.obsidian/plugins/dxf-viewer/`.
-3. Copy those 3 files into that folder.
+3. Copy those three files into that folder.
 4. Reload Obsidian and enable the plugin.
 
-## Usage
+## 🚀 Usage
 
 1. Open a `.dxf` file from your vault, or embed one in a note with `![[file.dxf]]`.
-2. Drag to pan.
-3. Pinch or use `cmd/ctrl + scroll wheel` to zoom.
-4. Use the ruler button to enter measurement mode.
-5. Click two vertices, two curves, or a mix of both to measure distance.
-6. Click a circle or arc to measure its diameter.
+2. Drag on trackpad or click and drag with mouse to pan.
+3. Pinch on trackpad or use `Cmd/Ctrl + scroll wheel` to zoom.
+4. Select the ruler button to enter measurement mode.
+5. Select two vertices, two curves, or a mix of both to measure distance.
+6. Select a circle or arc to measure its diameter.
 7. Double-click to clear the current measurement.
-8. Use the units button if the drawing needs a manual inch/mm override.
+8. Select the units button if the drawing needs a manual inch/mm override.
 
-## Notes
+## 📋 Notes
 
-- The first public release is marked desktop-only.
-- Embed rendering is currently intended for reading mode.
+- Desktop-only for the initial release.
+- Embed rendering is intended for reading mode.
 - Measurement display can follow the drawing units or show both metric and imperial values.
 - Grid spacing follows the selected drawing units.
 
-## Development
+## ✍️ Author
 
-```bash
-npm install
-npm run build
-npm run lint
-```
+Developed by [eweinhoffer](https://www.ericweinhoffer.com)
 
-Release builds should publish `manifest.json`, `main.js`, and `styles.css` as GitHub release assets.
-
-## License
+## 📄 License
 
 MIT
