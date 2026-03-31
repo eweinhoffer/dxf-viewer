@@ -4,6 +4,8 @@
 
 View, measure, and embed DXF drawings directly inside Obsidian.
 
+[![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/eweinhoffer)
+
 ## 📚 Features
 
 - Open `.dxf` files in a dedicated Obsidian view.
