@@ -2,7 +2,7 @@
 
 ![DXF Viewer](dxf-viewer-title.png)
 
-View, measure, and embed DXF drawings directly inside Obsidian.
+View, measure, and embed DXF drawings in your vault.
 
 ## 📚 Features
 
