@@ -45,12 +45,14 @@ export class DxfFileView extends TextFileView {
 	}
 
 	async onOpen(): Promise<void> {
+		await super.onOpen();
 		this.pane = new DxfViewerPane(this.contentEl, this.plugin);
 		this.addChild(this.pane);
 		this.pane.setRawData(this.rawData);
 	}
 
 	async onClose(): Promise<void> {
+		await super.onClose();
 		this.pane = null;
 	}
 }
