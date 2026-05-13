@@ -135,7 +135,7 @@ export class DxfViewerPane extends Component {
 		this.registerDomEvent(this.helpButtonEl, "click", this.toggleHelp);
 		this.registerDomEvent(this.unitButtonEl, "click", this.toggleUnitMenu);
 		this.registerDomEvent(this.drawingUnitSelectEl, "change", this.onDrawingUnitChange);
-		this.registerDomEvent(document, "pointerdown", this.onDocumentPointerDown);
+		this.registerDomEvent(window.activeDocument, "pointerdown", this.onDocumentPointerDown);
 		this.registerDomEvent(this.canvasEl, "pointerdown", this.onPointerDown);
 		this.registerDomEvent(this.canvasEl, "pointermove", this.onPointerMove);
 		this.registerDomEvent(this.canvasEl, "pointerup", this.onPointerUp);

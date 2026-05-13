@@ -1,7 +1,7 @@
 {
 	"id": "dxf-viewer",
 	"name": "DXF Viewer",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"minAppVersion": "1.12.4",
 	"description": "View, measure, and embed DXF drawings in your vault.",
 	"author": "Eric Weinhoffer",

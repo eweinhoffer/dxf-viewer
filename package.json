@@ -1,6 +1,6 @@
 {
 	"name": "dxf-viewer",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "View, measure, and embed DXF drawings in your vault.",
 	"author": "eweinhoffer",
 	"homepage": "https://github.com/eweinhoffer/dxf-viewer",
